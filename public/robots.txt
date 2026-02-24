@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://noteshub-0fnt.onrender.com/sitemap.xml
