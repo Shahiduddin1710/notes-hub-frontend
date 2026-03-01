@@ -8,14 +8,20 @@ const Files = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const showSqlPractice =
+    university === "mu" &&
+    semester === "sem4" &&
+    subject === "dbms";
+
   useEffect(() => {
     const fetchFiles = async () => {
       try {
         setError("");
 
         const res = await fetch(
-          `https://notes-hub-backend-three.vercel.app/api/notes?university=${university}&semester=${semester}&subject=${subject}`,
+          `https://notes-hub-backend-three.vercel.app/api/notes?university=${university}&semester=${semester}&subject=${subject}`
         );
+
         const data = await res.json();
 
         if (data.success && data.notes.length > 0) {
@@ -23,7 +29,7 @@ const Files = () => {
         } else {
           setError("This section will be updated with study materials soon");
         }
-      } catch (err) {
+      } catch {
         setError("Failed to load files");
       } finally {
         setLoading(false);
@@ -44,6 +50,19 @@ const Files = () => {
             {(subject || "Notes").toUpperCase()} Files
           </h1>
         </div>
+
+        {showSqlPractice && (
+          <div style={{ marginBottom: "25px", textAlign: "center" }}>
+            <a
+              href="https://sql-practices.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`notes-btn ${university === "msbte" ? "msbte" : "mu"}`}
+            >
+              Open SQL Interactive Practice 
+            </a>
+          </div>
+        )}
 
         <div className="notes-grid">
           {files.map((file, index) => (
